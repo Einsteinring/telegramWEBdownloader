@@ -1,0 +1,39 @@
+{
+  "manifest_version": 3,
+  "name": "TG Web Media Downloader",
+  "version": "1.0.0",
+  "description": "Скачивание фото и видео из каналов Telegram Web (K и A). Личное использование.",
+  "minimum_chrome_version": "111",
+  "permissions": ["downloads", "storage"],
+  "host_permissions": ["https://web.telegram.org/*"],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "TG Web Media Downloader",
+    "default_popup": "popup/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://web.telegram.org/k/*", "https://web.telegram.org/a/*"],
+      "js": ["page/bridge.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": ["https://web.telegram.org/k/*", "https://web.telegram.org/a/*"],
+      "js": [
+        "content/selectors.k.js",
+        "content/selectors.a.js",
+        "content/common.js",
+        "content/adapter.k.js",
+        "content/adapter.a.js",
+        "content/ui.js",
+        "content/main.js"
+      ],
+      "css": ["content/ui.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}

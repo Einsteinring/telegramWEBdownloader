@@ -1,0 +1,217 @@
+/* Стили UI расширения внутри Telegram Web. Все классы с префиксом tgdl- */
+
+.tgdl-host-rel {
+  position: relative !important;
+}
+
+/* Оверлей поверх медиа: выше .protector (Web A) и прочих слоёв */
+.tgdl-overlay {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  z-index: 60;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  pointer-events: none;
+  font: 600 12px/1 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.tgdl-overlay > * {
+  pointer-events: auto;
+}
+
+.tgdl-btn {
+  min-width: 30px;
+  height: 30px;
+  padding: 0 8px;
+  border: none;
+  border-radius: 15px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.15s, background 0.15s;
+  font: inherit;
+}
+
+.tgdl-host:hover .tgdl-btn,
+.tgdl-btn[data-state]:not([data-state="idle"]) {
+  opacity: 1;
+}
+
+.tgdl-btn:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.tgdl-btn[data-state="queued"],
+.tgdl-btn[data-state="resolving"] {
+  background: rgba(60, 90, 160, 0.85);
+}
+
+.tgdl-btn[data-state="active"] {
+  background: rgba(30, 120, 220, 0.9);
+}
+
+.tgdl-btn[data-state="done"] {
+  background: rgba(30, 150, 70, 0.85);
+}
+
+.tgdl-btn[data-state="error"] {
+  background: rgba(200, 50, 50, 0.9);
+}
+
+/* Чекбокс режима выбора */
+.tgdl-check {
+  display: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+body.tgdl-select-mode .tgdl-check {
+  display: inline-flex;
+}
+
+body.tgdl-select-mode .tgdl-btn {
+  opacity: 1;
+}
+
+.tgdl-check[aria-checked="true"] {
+  background: #3390ec;
+  border-color: #3390ec;
+}
+
+.tgdl-check[aria-checked="true"]::after {
+  content: "✓";
+}
+
+body.tgdl-select-mode .tgdl-selected-host {
+  outline: 3px solid #3390ec;
+  outline-offset: -3px;
+}
+
+/* Плавающая панель */
+.tgdl-toolbar {
+  position: fixed;
+  right: 16px;
+  bottom: 84px;
+  z-index: 2147483000;
+  width: 260px;
+  max-width: calc(100vw - 32px);
+  background: #1f2430;
+  color: #e8eaf0;
+  border-radius: 12px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+  font: 13px/1.35 system-ui, -apple-system, "Segoe UI", sans-serif;
+  overflow: hidden;
+}
+
+.tgdl-toolbar.tgdl-collapsed .tgdl-body {
+  display: none;
+}
+
+.tgdl-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  background: #283041;
+  cursor: pointer;
+  user-select: none;
+  font-weight: 600;
+}
+
+.tgdl-body {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tgdl-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.tgdl-toolbar button {
+  flex: 1 1 auto;
+  padding: 6px 8px;
+  border: none;
+  border-radius: 8px;
+  background: #3390ec;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+}
+
+.tgdl-toolbar button.tgdl-secondary {
+  background: #3a4458;
+}
+
+.tgdl-toolbar button.tgdl-danger {
+  background: #c94040;
+}
+
+.tgdl-toolbar button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.tgdl-toolbar label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1 1 45%;
+  font-size: 11px;
+  color: #aab2c5;
+}
+
+.tgdl-toolbar input {
+  padding: 4px 6px;
+  border: 1px solid #3a4458;
+  border-radius: 6px;
+  background: #151922;
+  color: #e8eaf0;
+  font: inherit;
+  min-width: 0;
+}
+
+.tgdl-status {
+  font-size: 12px;
+  color: #aab2c5;
+  white-space: pre-line;
+}
+
+/* Всплывающие уведомления */
+.tgdl-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  z-index: 2147483001;
+  max-width: min(480px, calc(100vw - 32px));
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: #1f2430;
+  color: #fff;
+  font: 13px/1.35 system-ui, -apple-system, "Segoe UI", sans-serif;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+}
+
+.tgdl-toast.tgdl-error {
+  background: #8f2d2d;
+}

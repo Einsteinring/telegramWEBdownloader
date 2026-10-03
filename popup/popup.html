@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>TG Web Media Downloader</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <h1>TG Web Media Downloader</h1>
+    <div id="page-status" class="muted">Проверяю вкладку…</div>
+  </header>
+
+  <section>
+    <h2>Очередь</h2>
+    <div class="counters">
+      <div><b id="c-pending">0</b><span>в очереди</span></div>
+      <div><b id="c-active">0</b><span>активно</span></div>
+      <div><b id="c-done">0</b><span>скачано</span></div>
+      <div><b id="c-failed">0</b><span>ошибок</span></div>
+    </div>
+    <div id="active-list"></div>
+    <div class="row">
+      <button id="btn-pause" class="secondary">Пауза</button>
+      <button id="btn-cancel" class="danger">Отменить очередь</button>
+    </div>
+  </section>
+
+  <section>
+    <h2>Скачать всё в открытом чате</h2>
+    <div class="row">
+      <label>До даты (включительно)<input type="date" id="all-date"></label>
+      <label>Лимит, шт.<input type="number" id="all-limit" min="1" placeholder="без лимита"></label>
+    </div>
+    <div class="row">
+      <button id="btn-all-start">Старт</button>
+      <button id="btn-all-stop" class="danger">Стоп</button>
+    </div>
+    <p class="muted small">То же самое есть на панели «⬇ TG Downloader» внизу справа на странице.</p>
+  </section>
+
+  <section>
+    <h2>Неудачные <button id="btn-retry" class="link">повторить все</button> <button id="btn-clear-failed" class="link">очистить</button></h2>
+    <ul id="failed-list" class="list"></ul>
+  </section>
+
+  <section>
+    <h2>Лог <button id="btn-clear-log" class="link">очистить</button></h2>
+    <ul id="log-list" class="list log"></ul>
+  </section>
+
+  <section>
+    <h2>Настройки</h2>
+    <form id="settings">
+      <div class="row">
+        <label>Пауза от, с<input type="number" step="0.1" min="0" name="pauseMin"></label>
+        <label>Пауза до, с<input type="number" step="0.1" min="0" name="pauseMax"></label>
+      </div>
+      <div class="row">
+        <label>Параллельно
+          <select name="concurrency">
+            <option value="1">1</option>
+            <option value="2">2</option>
+          </select>
+        </label>
+        <label>Повторов при ошибке<input type="number" min="0" max="5" name="maxRetries"></label>
+      </div>
+      <label>Шаблон пути
+        <input type="text" name="template" spellcheck="false">
+        <span class="muted small">Токены: {channel} {date} {time} {id} {type} {ext}. Путь — относительно папки загрузок.</span>
+      </label>
+      <label>Способ сохранения
+        <select name="downloadMethod">
+          <option value="auto">Авто (chrome.downloads, при сбое — ссылка на странице)</option>
+          <option value="api">Только chrome.downloads</option>
+          <option value="anchor">Только ссылка на странице</option>
+        </select>
+      </label>
+      <div class="row">
+        <button type="submit">Сохранить</button>
+        <span id="settings-saved" class="muted small"></span>
+      </div>
+    </form>
+  </section>
+
+  <section>
+    <h2>История скачанного</h2>
+    <p id="history" class="muted small">…</p>
+    <button id="btn-clear-history" class="danger">Очистить историю (дедупликацию)</button>
+  </section>
+
+  <script src="popup.js"></script>
+</body>
+</html>
